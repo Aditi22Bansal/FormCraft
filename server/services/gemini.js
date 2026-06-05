@@ -52,7 +52,49 @@ async function tryGenerate(genAI, modelName, prompt, systemPrompt, retries = 1) 
   }
 }
 
+async function callOpenRouter(prompt, systemPrompt) {
+  const apiKey = process.env.OPENROUTER_API_KEY?.trim();
+  const model = process.env.OPENROUTER_MODEL?.trim() || 'openrouter/free';
+
+  const response = await fetch('https://openrouter.ai/api/v1/chat/completions', {
+    method: 'POST',
+    headers: {
+      'Authorization': `Bearer ${apiKey}`,
+      'Content-Type': 'application/json',
+      'HTTP-Referer': 'http://localhost:5000',
+      'X-Title': 'FormCraft',
+    },
+    body: JSON.stringify({
+      model,
+      messages: [
+        { role: 'system', content: systemPrompt },
+        { role: 'user', content: prompt }
+      ]
+    })
+  });
+
+  if (!response.ok) {
+    const errorText = await response.text();
+    throw new Error(`OpenRouter error: ${response.status} ${errorText}`);
+  }
+
+  const data = await response.json();
+  const text = data.choices?.[0]?.message?.content?.trim();
+  if (!text) throw new Error('Empty response from OpenRouter');
+
+  const match = text.match(/\[[\s\S]*\]/) || text.match(/\{[\s\S]*\}/);
+  return JSON.parse(match ? match[0] : text);
+}
+
 async function callGemini(prompt, systemPrompt) {
+  if (process.env.OPENROUTER_API_KEY?.trim()) {
+    try {
+      return await callOpenRouter(prompt, systemPrompt);
+    } catch (err) {
+      console.warn('OpenRouter call failed, falling back to direct Gemini:', err.message);
+    }
+  }
+
   const apiKey = process.env.GEMINI_API_KEY?.trim();
   if (!apiKey) throw new Error('GEMINI_API_KEY is not configured — add it to server/.env and restart the server');
 
@@ -68,7 +110,7 @@ async function callGemini(prompt, systemPrompt) {
       lastError = err;
       const isAuthError = err.message?.includes('API_KEY_INVALID') || err.message?.includes('API key not valid');
       if (isAuthError) break;
-      console.warn(`Gemini model ${modelName} failed: ${err.message?.slice(0, 120)}`);
+      console.warn(`Gemini model ${modelName} failed: ${err.message}`);
     }
   }
 

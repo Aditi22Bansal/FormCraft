@@ -19,7 +19,7 @@ import JourneyTimeline from '../components/analytics/JourneyTimeline';
 import { useLiveSessions } from '../hooks/useSocket';
 import api from '../lib/api';
 
-const chartTooltip = { background: '#1E1E28', border: '1px solid #2A2A38', borderRadius: 6, fontSize: 12, color: '#F0EFF8' };
+const chartTooltip = { background: '#FFFFFF', border: '1px solid #E4E4E7', borderRadius: 6, fontSize: 12, color: '#18181B' };
 
 export default function AnalyticsPage() {
   const { id } = useParams();
@@ -105,11 +105,11 @@ export default function AnalyticsPage() {
             <h3 className="text-sm font-semibold text-text mb-4">Submissions Over Time</h3>
             <ResponsiveContainer width="100%" height={200}>
               <LineChart data={trends || []}>
-                <CartesianGrid strokeDasharray="3 3" stroke="#2A2A38" />
-                <XAxis dataKey="date" tick={{ fontSize: 11, fill: '#8B8AA0' }} axisLine={false} tickLine={false} />
-                <YAxis allowDecimals={false} tick={{ fontSize: 11, fill: '#8B8AA0' }} axisLine={false} tickLine={false} />
+                <CartesianGrid strokeDasharray="3 3" stroke="#E4E4E7" />
+                <XAxis dataKey="date" tick={{ fontSize: 11, fill: '#52525B' }} axisLine={false} tickLine={false} />
+                <YAxis allowDecimals={false} tick={{ fontSize: 11, fill: '#52525B' }} axisLine={false} tickLine={false} />
                 <Tooltip contentStyle={chartTooltip} />
-                <Line type="monotone" dataKey="count" stroke="#7C6FCD" strokeWidth={2} dot={false} />
+                <Line type="monotone" dataKey="count" stroke="#6366F1" strokeWidth={2} dot={false} />
               </LineChart>
             </ResponsiveContainer>
           </div>
@@ -118,11 +118,11 @@ export default function AnalyticsPage() {
               <h3 className="text-sm font-semibold text-text mb-4">Distribution: {label}</h3>
               <ResponsiveContainer width="100%" height={200}>
                 <BarChart data={cd}>
-                  <CartesianGrid strokeDasharray="3 3" stroke="#2A2A38" />
-                  <XAxis dataKey="name" tick={{ fontSize: 11, fill: '#8B8AA0' }} axisLine={false} tickLine={false} />
-                  <YAxis allowDecimals={false} tick={{ fontSize: 11, fill: '#8B8AA0' }} axisLine={false} tickLine={false} />
+                  <CartesianGrid strokeDasharray="3 3" stroke="#E4E4E7" />
+                  <XAxis dataKey="name" tick={{ fontSize: 11, fill: '#52525B' }} axisLine={false} tickLine={false} />
+                  <YAxis allowDecimals={false} tick={{ fontSize: 11, fill: '#52525B' }} axisLine={false} tickLine={false} />
                   <Tooltip contentStyle={chartTooltip} />
-                  <Bar dataKey="count" fill="#7C6FCD" radius={[4, 4, 0, 0]} />
+                  <Bar dataKey="count" fill="#6366F1" radius={[4, 4, 0, 0]} />
                 </BarChart>
               </ResponsiveContainer>
             </div>

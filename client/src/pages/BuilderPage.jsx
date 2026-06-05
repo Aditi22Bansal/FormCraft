@@ -113,8 +113,21 @@ export default function BuilderPage() {
     try {
       const payload = { title, description, fields, steps, settings, status: publish ? 'active' : 'draft' };
       if (isEdit) {
-        await api.put(`/forms/${id}`, payload);
-        toast.success(publish ? 'Form published!' : 'Form saved!');
+        const res = await api.put(`/forms/${id}`, payload);
+        if (publish) {
+          const publicUrl = `${window.location.origin}/f/${res.data.slug}`;
+          navigator.clipboard.writeText(publicUrl);
+          toast.success((t) => (
+            <span>
+              Form published! Link copied.{' '}
+              <a href={publicUrl} target="_blank" rel="noreferrer" className="text-accent underline hover:text-accent-hover font-semibold">
+                Open Form →
+              </a>
+            </span>
+          ), { duration: 6000 });
+        } else {
+          toast.success('Form saved!');
+        }
       } else {
         const res = await api.post('/forms', payload);
         toast.success('Form created!');

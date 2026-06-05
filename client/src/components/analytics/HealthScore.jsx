@@ -22,8 +22,8 @@ export default function HealthScore({ score = 0, suggestions = [] }) {
     <div className="bg-surface border border-border rounded-[10px] p-6 flex gap-6 items-center">
       <div className="relative w-32 h-32 shrink-0">
         <svg className="w-full h-full -rotate-90" viewBox="0 0 120 120">
-          <circle cx="60" cy="60" r="54" fill="none" stroke="#2A2A38" strokeWidth="8" />
-          <motion.circle cx="60" cy="60" r="54" fill="none" stroke="#7C6FCD" strokeWidth="8"
+          <circle cx="60" cy="60" r="54" fill="none" stroke="#E4E4E7" strokeWidth="8" />
+          <motion.circle cx="60" cy="60" r="54" fill="none" stroke="#6366F1" strokeWidth="8"
             strokeLinecap="round" strokeDasharray={circumference} strokeDashoffset={offset} />
         </svg>
         <div className="absolute inset-0 flex flex-col items-center justify-center">

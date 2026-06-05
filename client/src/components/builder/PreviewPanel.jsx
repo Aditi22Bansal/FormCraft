@@ -20,8 +20,8 @@ export default function PreviewPanel({ open, onClose, title, fields, primaryColo
             className="fixed inset-0 bg-black/20 z-40" onClick={onClose} />
           <motion.div initial={{ x: '100%' }} animate={{ x: 0 }} exit={{ x: '100%' }}
             transition={{ duration: 0.2, ease: 'easeOut' }}
-            className="fixed right-0 top-0 h-full w-full max-w-md bg-bg border-l border-border z-50 overflow-y-auto">
-            <div className="sticky top-0 bg-bg border-b border-border px-5 py-4 flex items-center justify-between">
+            className="fixed right-0 top-0 h-full w-full max-w-md bg-surface border-l border-border z-50 overflow-y-auto">
+            <div className="sticky top-0 bg-surface border-b border-border px-5 py-4 flex items-center justify-between">
               <h3 className="font-semibold text-text">Preview</h3>
               <button onClick={onClose} className="p-1 text-text-secondary hover:text-text"><X size={18} /></button>
             </div>
@@ -33,7 +33,7 @@ export default function PreviewPanel({ open, onClose, title, fields, primaryColo
                   return (
                     <div key={field.id}>
                       <label className="block text-sm font-medium text-text mb-1.5">
-                        {field.label || 'Untitled'}{field.required && <span className="text-error ml-1">*</span>}
+                        {field.label || 'Untitled'}{field.required && <span className="text-danger ml-1">*</span>}
                       </label>
                       {field.helperText && <p className="text-xs text-text-secondary mb-2">{field.helperText}</p>}
                       <FieldRenderer field={field} value={ans?.value} onChange={(v) => setAnswer(field.id, v)} primaryColor={primaryColor} />

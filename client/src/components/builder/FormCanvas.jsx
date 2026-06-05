@@ -18,14 +18,14 @@ function SortableField({ field, selected, onSelect, onRemove }) {
         <div className="flex-1 min-w-0">
           <label className="block text-sm font-medium text-text mb-1">
             {field.label || <span className="text-text-secondary italic">Untitled {field.type}</span>}
-            {field.required && <span className="text-error ml-1">*</span>}
+            {field.required && <span className="text-danger ml-1">*</span>}
           </label>
           {field.helperText && <p className="text-xs text-text-secondary mb-2">{field.helperText}</p>}
           <FieldRenderer field={field} value="" onChange={() => {}} />
         </div>
         <div className="flex gap-1">
           <button onClick={(e) => { e.stopPropagation(); onSelect(field.id); }} className="p-1.5 text-text-secondary hover:text-primary rounded-lg"><Pencil size={14} /></button>
-          <button onClick={(e) => { e.stopPropagation(); onRemove(field.id); }} className="p-1.5 text-text-secondary hover:text-error rounded-lg"><Trash2 size={14} /></button>
+          <button onClick={(e) => { e.stopPropagation(); onRemove(field.id); }} className="p-1.5 text-text-secondary hover:text-danger rounded-lg"><Trash2 size={14} /></button>
         </div>
       </div>
     </div>

@@ -67,7 +67,7 @@ export default function FieldSettings({ field, allFields, onUpdate, quizMode }) 
                 <input type="text" value={opt} onChange={(e) => {
                   const opts = [...field.options]; opts[i] = e.target.value; onUpdate({ options: opts });
                 }} className="flex-1 px-3 py-1.5 border border-border rounded-lg text-sm" />
-                <button onClick={() => onUpdate({ options: field.options.filter((_, j) => j !== i) })} className="text-text-secondary hover:text-error text-sm">×</button>
+                <button onClick={() => onUpdate({ options: field.options.filter((_, j) => j !== i) })} className="text-text-secondary hover:text-danger text-sm">×</button>
               </div>
             ))}
             <button onClick={() => onUpdate({ options: [...(field.options || []), `Option ${(field.options?.length || 0) + 1}`] })}

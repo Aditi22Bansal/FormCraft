@@ -1,12 +1,13 @@
 import { NavLink, useNavigate } from 'react-router-dom';
 import { LayoutDashboard, FileText, BarChart2, Settings, LogOut } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
+import Logo from './Logo';
 
 const navItems = [
   { to: '/dashboard', icon: LayoutDashboard, label: 'My Forms' },
   { to: '/dashboard', icon: FileText, label: 'Templates' },
   { to: '/dashboard', icon: BarChart2, label: 'Analytics' },
-  { to: '/dashboard', icon: Settings, label: 'Settings' },
+  { to: '/settings', icon: Settings, label: 'Settings' },
 ];
 
 export default function Sidebar() {
@@ -17,8 +18,8 @@ export default function Sidebar() {
     <aside className="fixed left-0 top-0 h-screen w-60 bg-surface border-r border-border flex flex-col z-40">
       <div className="px-5 py-5 border-b border-border">
         <div className="flex items-center gap-2.5">
-          <div className="w-7 h-7 bg-accent rounded-lg flex items-center justify-center text-text text-xs font-bold">F</div>
-          <span className="font-semibold text-text">FormCraft</span>
+          <Logo size={24} className="w-6 h-6" />
+          <span className="font-semibold text-text tracking-tight">FormCraft</span>
         </div>
       </div>
       <nav className="flex-1 px-3 py-4 space-y-0.5">

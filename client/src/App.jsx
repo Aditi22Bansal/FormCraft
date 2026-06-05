@@ -8,6 +8,7 @@ import DashboardPage from './pages/DashboardPage';
 import BuilderPage from './pages/BuilderPage';
 import AnalyticsPage from './pages/AnalyticsPage';
 import PublicFormPage from './pages/PublicFormPage';
+import SettingsPage from './pages/SettingsPage';
 
 function ProtectedRoute({ children }) {
   const { user, loading } = useAuth();
@@ -35,6 +36,7 @@ export default function App() {
       <Route path="/forms/new" element={<ProtectedRoute><BuilderPage /></ProtectedRoute>} />
       <Route path="/forms/:id/edit" element={<ProtectedRoute><BuilderPage /></ProtectedRoute>} />
       <Route path="/forms/:id/analytics" element={<ProtectedRoute><AnalyticsPage /></ProtectedRoute>} />
+      <Route path="/settings" element={<ProtectedRoute><SettingsPage /></ProtectedRoute>} />
 
       <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>

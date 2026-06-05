@@ -24,6 +24,22 @@ app.use(express.json({ limit: '2mb' }));
 app.set('trust proxy', 1);
 
 app.get('/api/health', (_req, res) => res.json({ success: true, data: { status: 'ok' } }));
+app.get('/api/diagnostics', (_req, res) => {
+  const mongoStates = ['Disconnected', 'Connected', 'Connecting', 'Disconnecting'];
+  const stateVal = mongoose.connection.readyState;
+  res.json({
+    success: true,
+    data: {
+      mongo: mongoStates[stateVal] || 'Unknown',
+      gemini: process.env.GEMINI_API_KEY ? 'Configured' : 'Missing',
+      openrouter: process.env.OPENROUTER_API_KEY ? 'Configured' : 'Missing',
+      nodeVersion: process.version,
+      platform: process.platform,
+      memory: `${(process.memoryUsage().heapUsed / 1024 / 1024).toFixed(1)} MB`,
+      uptime: `${Math.round(process.uptime())}s`
+    }
+  });
+});
 app.get('/widget.js', (_req, res) => {
   res.type('application/javascript');
   res.sendFile(path.join(__dirname, 'public', 'widget.js'));

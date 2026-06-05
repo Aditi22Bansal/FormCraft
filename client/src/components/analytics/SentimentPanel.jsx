@@ -1,7 +1,7 @@
 import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip } from 'recharts';
 import Badge from '../ui/Badge';
 
-const COLORS = { positive: '#4ADE80', neutral: '#8B8AA0', negative: '#F87171' };
+const COLORS = { positive: '#4ADE80', neutral: '#A1A1AA', negative: '#F87171' };
 
 export default function SentimentPanel({ sentimentByField = {}, responses = [] }) {
   const entries = Object.entries(sentimentByField);
@@ -24,7 +24,7 @@ export default function SentimentPanel({ sentimentByField = {}, responses = [] }
                   <Pie data={data} dataKey="value" nameKey="name" cx="50%" cy="50%" innerRadius={35} outerRadius={55}>
                     {data.map((d) => <Cell key={d.name} fill={COLORS[d.name]} />)}
                   </Pie>
-                  <Tooltip contentStyle={{ background: '#1E1E28', border: '1px solid #2A2A38', borderRadius: 6, fontSize: 12, color: '#F0EFF8' }} />
+                  <Tooltip contentStyle={{ background: '#FFFFFF', border: '1px solid #E4E4E7', borderRadius: 6, fontSize: 12, color: '#18181B' }} />
                 </PieChart>
               </ResponsiveContainer>
             ) : <p className="text-xs text-text-tertiary">No sentiment data</p>}

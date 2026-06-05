@@ -10,6 +10,7 @@ import { useHeatmap } from '../hooks/useHeatmap';
 import { useJourney } from '../hooks/useJourney';
 import { useFormSession } from '../hooks/useSocket';
 import { getSocket } from '../lib/socket';
+import Logo from '../components/ui/Logo';
 
 export default function PublicFormPage() {
   const { slug } = useParams();
@@ -83,19 +84,52 @@ export default function PublicFormPage() {
     onBlur: (id, val) => { heatmap.onBlur(id, val); journey.onBlur(id, val); setAnswer(id, val); },
   };
 
+  const accentColor = form.settings?.theme?.primaryColor || '#6366F1';
+
   if (form.settings?.conversationalMode) {
     return <ConversationalForm form={form} answers={answers} setAnswer={setAnswer} errors={errors} onSubmit={handleSubmit} submitting={submitting} fieldHandlers={fieldHandlers} timeLeft={timeLeft} />;
   }
 
   return (
-    <div className="min-h-screen bg-base py-12 px-4">
+    <div className="min-h-screen bg-base py-12 px-4 relative">
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,#6366F103_0%,transparent_50%)] pointer-events-none" />
       {timeLeft !== null && (
-        <div className="fixed top-4 right-4 text-sm font-mono text-warning bg-warning/10 border border-warning/20 px-3 py-1 rounded-lg">{timeLeft}s</div>
+        <div className="fixed top-4 right-4 text-xs font-mono font-bold text-warning bg-warning/10 border border-warning/20 px-3 py-1.5 rounded-lg z-50 shadow">
+          ⏱️ {timeLeft}s left
+        </div>
       )}
-      <div className="max-w-[640px] mx-auto">
-        <h1 className="text-2xl font-semibold text-text mb-2">{form.title}</h1>
-        {form.description && <p className="text-text-secondary text-sm mb-8">{form.description}</p>}
-        <ClassicForm form={form} answers={answers} setAnswer={setAnswer} errors={errors} onSubmit={handleSubmit} submitting={submitting} fieldHandlers={fieldHandlers} />
+      <div className="max-w-[640px] mx-auto space-y-4 relative z-10 animate-fade-in">
+        {/* FormCraft Top Branding Bar */}
+        <div className="flex items-center justify-between px-1 text-text-secondary select-none pb-1">
+          <div className="flex items-center gap-2.5">
+            <Logo size={28} className="w-7 h-7" />
+            <span className="text-lg font-bold tracking-tight text-text">FormCraft</span>
+          </div>
+          <span className="text-[11px] font-extrabold uppercase tracking-widest text-text-tertiary">Form OS</span>
+        </div>
+
+        {/* Google Forms-inspired header card */}
+        <div className="bg-surface border border-border rounded-xl shadow-sm overflow-hidden relative">
+          <div className="h-2 w-full" style={{ backgroundColor: accentColor }} />
+          <div className="p-6 sm:p-8 space-y-3">
+            <h1 className="text-2xl sm:text-3xl font-extrabold text-text tracking-tight">{form.title}</h1>
+            {form.description && (
+              <p className="text-sm text-text-secondary leading-relaxed pt-1 border-t border-border/40">
+                {form.description}
+              </p>
+            )}
+          </div>
+        </div>
+        
+        <ClassicForm 
+          form={form} 
+          answers={answers} 
+          setAnswer={setAnswer} 
+          errors={errors} 
+          onSubmit={handleSubmit} 
+          submitting={submitting} 
+          fieldHandlers={fieldHandlers} 
+        />
       </div>
     </div>
   );
